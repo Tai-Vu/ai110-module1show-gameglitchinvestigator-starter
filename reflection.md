@@ -27,17 +27,19 @@ Document at least 3 bugs you found. Add rows as needed.
 
 ## 2. How did you use AI as a teammate?
 
-- I used GitHub Copilot in the VS Code editor and the assistant to inspect `app.py`, pinpoint the broken logic, and propose concrete code fixes.
+- I used GitHub Copilot in the VS Code editor and the assistant to inspect `app.py`, pinpoint broken logic, and propose concrete code fixes.
+- I also used the assistant to help inspect the tests and craft a regression test that would catch the difficulty-switch bug.
 - One correct AI suggestion was identifying that the `New Game` button reset only `attempts` and `secret`, while leaving `status`, `score`, and `history` stale. I verified this by reading the updated `app.py` logic and confirming the game now starts fresh when the button is pressed.
-- One misleading AI-related suggestion was the emphasis on Streamlit import warnings during `app.py` module loading; those warnings were useful to note but did not indicate a real failure. I verified the result by running the code and seeing that the app imported successfully and the relevant tests still passed.
+- Another correct AI suggestion was that the difficulty range and attempt-limit values in `app.py` should be adjusted to make the levels more sensible. I verified this by reviewing `get_range_for_difficulty()` and `attempt_limit_map` in `app.py`, then confirming the selected difficulty now maps to the expected range and attempts.
+- One incorrect/misleading AI-related suggestion was initially focusing on the `logic_utils.py` helper ranges as the only source of the bug. That was misleading because the real issue was in `app.py` state initialization and range text display. I verified the true fix by checking the code path in `app.py` and running tests to confirm the difficulty switch behavior.
 
 ---
 
 ## 3. Debugging and testing your fixes
 
-- I decided a bug was fixed when the app no longer stayed stuck in the old game state and a new game could be started successfully with the `New Game` button.
-- I ran `python -m pytest` and confirmed `4 passed`, and I also ran the new regression test specifically with `python -m pytest tests/test_game_logic.py -q -k new_game_button_resets_full_state` to make sure the new fix behaved as intended.
-- AI helped me design the regression test by suggesting a simulated button press and assertions for full state reset, which made the verification more targeted and reliable.
+- I decided the difficulty bug was fixed when changing difficulty immediately updated the secret range and attempt limit, and the app displayed the correct range text for the selected level.
+- I verified my repairs by running `python -m pytest -q` and confirming all tests passed, including the new regression test for difficulty switching and range/attempt updates.
+- I also checked the code directly in `app.py` to ensure the `difficulty` session state reset logic, `secret` regeneration, and sidebar captions matched the intended behavior.
 
 ---
 

@@ -36,7 +36,7 @@ def check_guess(guess, secret):
     outcome examples: "Win", "Too High", "Too Low"
     """
     if guess == secret:
-        return "Win"  # FIX: implemented shared guess logic after model-guided refactor
+        return "Win"  # FIX: implemented shared guess logic after model-guided refactor with AI collaboration
 
     try:
         if guess > secret:
