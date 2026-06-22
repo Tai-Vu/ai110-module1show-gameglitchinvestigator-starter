@@ -25,19 +25,20 @@ It wrote the code, ran away, and now the game is unplayable.
 
 ## 📝 Document Your Experience
 
-- [ ] Describe the game's purpose.
-- [ ] Detail which bugs you found.
-- [ ] Explain what fixes you applied.
+- The game is a Streamlit-based number guessing challenge where the player guesses a secret number and receives higher/lower hints until they win or run out of attempts.
+- I found that the hint text was reversed for too-high and too-low guesses, which made the game misleading even when the logic worked otherwise.
+- I fixed the hint direction in `logic_utils.py` and refactored the shared guess logic into a helper function imported by `app.py`. I also added a regression test in `tests/test_game_logic.py` to verify the corrected hint behavior.
 
 ## 📸 Demo Walkthrough
 
 Describe your fixed game in numbered steps so a reader can follow along without watching a video:
 
-1. <!-- Describe this step -->
-2. <!-- Describe this step -->
-3. <!-- Describe this step -->
-4. <!-- Describe this step -->
-5. <!-- Add more steps as needed -->
+1. The user selects a difficulty level and sees the range and attempt limit for the game.
+2. The user enters a guess, such as `40`, and submits it.
+3. The game responds with `Too Low` and a hint to go higher if the guess is below the secret number.
+4. The user enters another guess, such as `70`, and the game responds with `Too High` and a hint to go lower if the guess is above the secret number.
+5. The score updates after each guess based on the outcome and attempt count.
+6. The user continues guessing until the correct number is entered, and the game displays a win message with the final score.
 
 **Screenshot** *(optional)*: <!-- Insert a screenshot of your fixed, winning game here -->
 
