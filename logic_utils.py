@@ -3,10 +3,10 @@ def get_range_for_difficulty(difficulty: str):
     if difficulty == "Easy":
         return 1, 20
     if difficulty == "Normal":
-        return 1, 100
-    if difficulty == "Hard":
         return 1, 50
-    return 1, 100  # FIX: moved difficulty mapping from app.py after AI collaboration
+    if difficulty == "Hard":
+        return 1, 100
+    return 1, 100
 
 
 def parse_guess(raw: str):
@@ -31,24 +31,25 @@ def parse_guess(raw: str):
 
 def check_guess(guess, secret):
     """
-    Compare guess to secret and return an outcome string.
+    Compare guess to secret and return an outcome and hint message.
 
-    outcome examples: "Win", "Too High", "Too Low"
+    Returns: (outcome, message)
     """
+    # FIX: corrected hint direction with AI-assisted review of compare logic
     if guess == secret:
-        return "Win"  # FIX: implemented shared guess logic after model-guided refactor with AI collaboration
+        return "Win", "🎉 Correct!"
 
     try:
         if guess > secret:
-            return "Too High"
-        return "Too Low"
+            return "Too High", "📉 Go LOWER!"
+        return "Too Low", "📈 Go HIGHER!"
     except TypeError:
         g = str(guess)
         if g == secret:
-            return "Win"
+            return "Win", "🎉 Correct!"
         if g > secret:
-            return "Too High"
-        return "Too Low"
+            return "Too High", "📉 Go LOWER!"
+        return "Too Low", "📈 Go HIGHER!"
 
 
 def update_score(current_score: int, outcome: str, attempt_number: int):
